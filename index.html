@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Quiz STSI4203 - Interaksi Manusia dan Komputer</title>
+  <style>
+    body { font-family: Arial, sans-serif; background:#f4f4f4; }
+    .container { width:70%; margin:40px auto; background:white; padding:20px; border-radius:10px; }
+    .question-box { margin-bottom:20px; }
+    .nav-btn { padding:10px 20px; margin:5px; }
+    #result { margin-top:20px; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Quiz STSI4203 - Interaksi Manusia dan Komputer</h2>
+
+    <div id="quiz"></div>
+    <div id="navigation"></div>
+    <div id="result"></div>
+  </div>
+
+<script>
+const questions = [
+{q:"IMK mempelajari hubungan antara...",options:["Komputer dan jaringan","User dan sistem komputer","Program dan database","Hardware dan software"],answer:1,explain:"IMK berfokus pada hubungan manusia sebagai pengguna dengan sistem komputer."},
+{q:"Tujuan utama IMK adalah...",options:["Meningkatkan kecepatan CPU","Meningkatkan usability sistem","Menambah memori","Meningkatkan keamanan jaringan"],answer:1,explain:"Tujuan IMK adalah meningkatkan kegunaan (usability)."},
+{q:"Usability berarti...",options:["Sistem indah tampilannya","Sistem mudah digunakan","Sistem punya banyak fitur","Sistem berjalan otomatis"],answer:1,explain:"Usability = kemudahan penggunaan."},
+{q:"Faktor terpenting dalam IMK adalah...",options:["User","Hardware","Database","Network"],answer:0,explain:"Pengguna adalah pusat IMK."},
+{q:"Contoh perangkat input adalah...",options:["Monitor","Mouse","Speaker","Printer"],answer:1,explain:"Mouse termasuk perangkat input."},
+{q:"Contoh perangkat output adalah...",options:["Keyboard","Scanner","Monitor","Mouse"],answer:2,explain:"Monitor adalah output device."},
+{q:"Model interaksi yang paling umum adalah...",options:["User–Computer–User","Computer–User–Environment","User–System–Interface","User–Interface–Computer"],answer:3,explain:"Urutannya adalah User → Interface → Computer."},
+{q:"Interface adalah...",options:["Perangkat keras","Penghubung user dengan sistem","Bahasa pemrograman","Gaya desain"],answer:1,explain:"Interface menghubungkan user dan sistem."},
+{q:"Cognitive load adalah...",options:["Kemampuan grafis","Beban ingatan user","Proses rendering","Kecepatan akses data"],answer:1,explain:"Cognitive load = beban kognitif pengguna."},
+{q:"Contoh prinsip umpan balik (feedback) adalah...",options:["Tampilan diam","Tidak ada respons","Cursor loading","Layar hitam"],answer:2,explain:"Cursor loading adalah feedback visual."},
+{q:"Affordance berarti...",options:["Kemampuan hardware","Petunjuk visual bahwa elemen bisa dipakai","Warna antarmuka","Kecepatan sistem"],answer:1,explain:"Affordance = petunjuk bagaimana elemen digunakan."},
+{q:"Consistency berarti...",options:["Desain berubah-ubah","Tata letak seragam","Tombol berbeda bentuk","Random icon"],answer:1,explain:"Konsistensi memudahkan user belajar."},
+{q:"Prototype digunakan untuk...",options:["Testing awal","Final release","Backup data","Deployment"],answer:0,explain:"Prototype berguna untuk pengujian awal."},
+{q:"Metode evaluasi tanpa melibatkan pengguna adalah...",options:["User testing","Heuristic evaluation","Field study","A/B Test"],answer:1,explain:"Heuristic evaluation dilakukan oleh ahli tanpa user."},
+{q:"Tokoh heuristik terkenal adalah...",options:["Dijkstra","Nielsen","Berners-Lee","Turing"],answer:1,explain:"Jakob Nielsen adalah tokoh utama heuristik."},
+{q:"Heuristik 'Visibility of system status' berarti...",options:["Sistem diam","User tidak diberi tahu","Sistem memberi informasi status","Tampilan polos"],answer:2,explain:"Sistem harus memberi tahu user apa yang terjadi."},
+{q:"Heuristik 'Error prevention' berarti...",options:["Sistem selalu crash","User disuruh berhati-hati","Mencegah kesalahan sebelum terjadi","Memperbanyak pesan error"],answer:2,explain:"Tujuannya mencegah kesalahan sejak awal."},
+{q:"User persona dibuat untuk...",options:["Memilih warna UI","Mewakili karakter user","Membuat kode program","Menentukan ukuran layar"],answer:1,explain:"Persona adalah representasi user."},
+{q:"Tahap awal desain IMK adalah...",options:["Coding","Analisis kebutuhan user","Deployment","Testing"],answer:1,explain:"Analisis kebutuhan dilakukan sebelum desain."},
+{q:"Fitts' Law menjelaskan...",options:["Kecepatan CPU","Hubungan jarak dan ukuran target","Ukuran layar","Kontras warna"],answer:1,explain:"Fitts' Law mengukur kecepatan interaksi berdasarkan jarak dan ukuran target."},
+{q:"GOMS digunakan untuk...",options:["Desain grafis","Analisis tugas","Menghitung biaya","Database modeling"],answer:1,explain:"GOMS adalah analisis task user."},
+{q:"Flowchart digunakan untuk...",options:["Desain UI","Memodelkan alur kerja","Membuat grafik","Desain icon"],answer:1,explain:"Flowchart menggambarkan alur proses."},
+{q:"Wireframe adalah...",options:["UI final","Kerangka awal tampilan","Database","Program jadi"],answer:1,explain:"Wireframe adalah draft UI."},
+{q:"Low fidelity prototype adalah...",options:["Tampilan final","Sketsa kasar","Produk jadi","Mockup pixel perfect"],answer:1,explain:"Low-fi adalah bentuk sketsa atau draft awal."},
+{q:"High fidelity prototype adalah...",options:["Tanpa warna","Mirip produk akhir","Sketsa manual","Tanpa interaksi"],answer:1,explain:"High-fi menyerupai produk final."},
+{q:"Tugas navigasi termasuk...",options:["Reading","Exploring interface","Rendering","Processing"],answer:1,explain:"Navigasi adalah bagian dari aktivitas user."},
+{q:"Error message harus...",options:["Menyalahkan user","Tidak jelas","Membantu user memperbaiki","Menggunakan kode error saja"],answer:2,explain:"Pesan error harus membantu user."},
+{q:"Metode observasi lapangan disebut...",options:["Field study","Heuristic","Lab testing","A/B Test"],answer:0,explain:"Field study dilakukan di lingkungan asli pengguna."},
+{q:"Shortcut keyboard meningkatkan...",options:["Cognitive load","Kecepatan interaksi","Waktu rendering","Kesalahan input"],answer:1,explain:"Shortcut meningkatkan efisiensi interaksi."},
+{q:"UX adalah...",options:["User Extreme","User Experience","Unique X-factor","Unified Exchange"],answer:1,explain:"UX = pengalaman pengguna."},
+{q:"UI adalah...",options:["Universal Input","User Interface","Under Interface","User Integration"],answer:1,explain:"UI = antarmuka pengguna."},
+{q:"Tampilan yang terlalu ramai menyebabkan...",options:["Cognitive load meningkat","User lebih cepat","Error berkurang","Navigasi mudah"],answer:0,explain:"Tampilan penuh meningkatkan beban kognitif."},
+{q:"Kontras warna berfungsi untuk...",options:["Dekorasi saja","Meningkatkan visibilitas","Mengurangi brightness","Menghilangkan teks"],answer:1,explain:"Kontras membantu keterbacaan."},
+{q:"Gesture digunakan pada...",options:["PC lama","Touchscreen","Printer","Scanner"],answer:1,explain:"Gesture digunakan pada perangkat touchscreen."},
+{q:"Voice interface termasuk...",options:["Modalitas input","Output grafis","Desain warna","Layout"],answer:0,explain:"Voice adalah salah satu modalitas input."},
+{q:"Scrolling termasuk...",options:["Navigasi","Error","Rendering","Processing"],answer:0,explain:"Scrolling adalah bagian dari navigasi."},
+{q:"Heuristik 'Match between system and real world' berarti...",options:["Bahasa teknis","Bahasa alami","Kode mesin","Error message"],answer:1,explain:"UI harus menggunakan istilah yang familiar bagi user."},
+{q:"Icon yang jelas berfungsi untuk...",options:["Hiasan","Mempercepat pemahaman","Memperlambat user","Mengurangi konsistensi"],answer:1,explain:"Ikon membantu identifikasi cepat."},
+{q:"Desain responsif berarti...",options:["UI statis","UI menyesuaikan layar","UI tidak berubah","UI hanya untuk PC"],answer:1,explain:"Desain responsif menyesuaikan ukuran perangkat."},
+{q:"Color blindness perlu diperhatikan dalam...",options:["Coding","UI/UX","Networking","Hardware"],answer:1,explain:"Warna UI harus ramah pengguna buta warna."}
+];
+
+let index = 0;
+
+function loadQuestion(i) {
+  const q = questions[i];
+  let html = `<div class='question-box'><p><strong>${i+1}. ${q.q}</strong></p>`;
+  q.options.forEach((opt, idx) => {
+    html += `<label><input type='radio' name='q${i}' value='${idx}'> ${opt}</label><br>`;
+  });
+  html += `<br><button onclick='checkAnswer(${i})'>Cek Jawaban</button>`;
+  html += `</div>`;
+  document.getElementById("quiz").innerHTML = html;
+  loadNav();
+}
+
+function loadNav() {
+  let nav = "";
+  if(index > 0) nav += `<button class='nav-btn' onclick='prevQ()'>Sebelumnya</button>`;
+  if(index < questions.length-1) nav += `<button class='nav-btn' onclick='nextQ()'>Berikutnya</button>`;
+  document.getElementById("navigation").innerHTML = nav;
+}
+
+function prevQ(){ index--; loadQuestion(index); }
+function nextQ(){ index++; loadQuestion(index); }
+
+function checkAnswer(i) {
+  const selected = document.querySelector(`input[name='q${i}']:checked`);
+  const correct = questions[i].answer;
+
+  if(!selected){ alert("Pilih jawaban dulu!"); return; }
+
+  const user = parseInt(selected.value);
+  const status = user === correct ? "Benar" : "Salah";
+
+  document.getElementById("result").innerHTML =
+    `<p><strong>${status}</strong><br>
+     Jawaban kamu: ${questions[i].options[user]}<br>
+     Jawaban benar: ${questions[i].options[correct]}<br>
+     <em>${questions[i].explain}</em></p>`;
+}
+
+loadQuestion(index);
+</script>
+</body>
+</html>
